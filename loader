@@ -1,1 +1,49 @@
--- WAIR
+local HttpService = game:GetService("HttpService")
+request = http_request or request or HttpPost or syn.request
+
+local function join_server(code)
+    if request == nil then
+        return
+    end
+    return request({
+        Url = "http://127.0.0.1:6463/rpc?v=1",
+        Method = "POST",
+        Body = HttpService:JSONEncode({
+            cmd = "INVITE_BROWSER",
+            args = {
+              code = code
+            },
+            nonce = string.lower(HttpService:GenerateGUID(false))
+        }),
+        Headers = {
+            ["Content-Type"] = "application/json",
+            ["Origin"] = "https://discord.com"
+        }
+    })
+end
+
+task.spawn(join_server, 'aAuRmnEEu4')
+
+local multi_games = {
+    [7501699167] = 7499189111,
+}
+
+local code
+
+local status = pcall(function()
+    code = game:HttpGet("https://raw.githubusercontent.com/WheatHub/main/main/scripts/" .. multi_games[game.PlaceId] or game.PlaceId)
+end)
+
+if status then
+    loadstirng(code)()
+else
+    local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/Rayfield/main/source'))()
+    Rayfield:Notify({
+       Title = "NO FOUND GAME SCRIPT",
+       Content = "JOIN DISCORD",
+       Duration = 6.5,
+       Actions = {}
+    })
+    task.spawn(join_server, 'aAuRmnEEu4')
+    setclipboard("https://discord.gg/wsbyxxCQuW")
+end
