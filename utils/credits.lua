@@ -1,5 +1,5 @@
 return fucntion(window_ui_rayfield)
-    local Credits_Tab = window_ui_rayfield:CreateTab("Credits")
+    Credits_Tab = window_ui_rayfield:CreateTab("Credits")
 
     Credits_Tab:CreateButton({
        Name = "Discord Invite: wsbyxxCQuW",
